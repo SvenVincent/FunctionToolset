@@ -1,0 +1,69 @@
+{
+	// "cybertron devcontainer environment(Space)"
+	"name": "Space",
+	// "dockerFile": "Dockerfile",
+	"image": "docker.inceptio.tech/seabird/devops/davinci_py_env:1.0.3",
+	"runArgs": [
+		"--init",
+		"--privileged"
+	],
+	"mounts": [
+		"source=dind-var-lib-docker-${env:USER},target=/var/lib/docker,type=volume",
+		"source=data-volume-for-${env:USER},target=/workspaces/data/,type=volume",
+		"source=user-volume-for-${env:USER},target=/workspaces/.data/,type=volume"
+	],
+	"overrideCommand": false,
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"resmon.show.battery": false,
+		"resmon.show.cpufreq": false,
+		"terminal.integrated.profiles.linux": {
+			"zsh": {
+				"path": "/bin/zsh"
+			}
+		},
+		"terminal.integrated.defaultProfile.linux": "zsh"
+	},
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-vscode.cpptools",
+		"ms-vscode.cpptools-themes",
+		"eamodio.gitlens",
+		"mhutchie.git-graph",
+		"mine.cpplint",
+		"mjohns.clang-format",
+		"mutantdino.resourcemonitor",
+		"mightbesimon.emoji-icons",
+		"WhenSunset.chatgpt-china",
+		"ms-python.python",
+		"tal7aouy.rainbow-bracket",
+		"mechatroner.rainbow-csv",
+		"christian-kohler.path-intellisense",
+		"alexdauenhauer.catppuccin-noctis",
+		"hoovercj.vscode-power-mode",
+		"MS-CEINTL.vscode-language-pack-zh-hans",
+		"flippidippi.flippidippi-theme"
+	],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		6080,
+		5901
+	],
+	"portsAttributes": {
+		"6080": {
+			"label": "VNC web client (noVNC)",
+			"onAutoForward": "silent"
+		},
+		"5901": {
+			"label": "VNC TCP port",
+			"onAutoForward": "silent"
+		}
+	},
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "setup-init",
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	"hostRequirements": {
+		"memory": "8gb"
+	}
+}
